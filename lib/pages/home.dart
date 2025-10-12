@@ -1,15 +1,189 @@
+import 'package:dojolink/models/category_model.dart';
+import 'package:dojolink/models/waza_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<CategoryModel> categories = [];
+  List<WazaModel> waza = [];
+
+  void getInitalValues() {
+    categories = CategoryModel.getCategories();
+    waza = WazaModel.getWaza();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    getInitalValues();
     return Scaffold(
       appBar: appBar(),
       backgroundColor: Colors.white,
-      body: Column(children: [searchField()]),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          searchField(),
+          SizedBox(height: 20),
+          categoriesSection(),
+          SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Waza',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 240,
+                child: ListView.separated(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: waza.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 210,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            const Color.fromARGB(255, 235, 150, 140),
+                            const Color.fromARGB(
+                              255,
+                              141,
+                              9,
+                              0,
+                            ).withValues(alpha: 0.3),
+                          ],
+                        ),
+
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                            child: Image.asset(
+                              waza[index].imagePath,
+                              width: double.infinity,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                            ),
+                            child: Text(
+                              waza[index].title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                              maxLines: 2, // prevents overflow
+                              overflow:
+                                  TextOverflow.ellipsis, // adds ... if too long
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            waza[index].level,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: const Color.fromARGB(255, 125, 5, 5),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(width: 25),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column categoriesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            'Categorie',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: 20),
+        SizedBox(
+          height: 120,
+          child: ListView.separated(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            separatorBuilder: (context, index) => SizedBox(width: 20),
+            itemBuilder: (context, index) {
+              return Container(
+                width: 100,
+                decoration: BoxDecoration(
+                  color: categories[index].boxColor.withValues(alpha: .2),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SvgPicture.asset(
+                          categories[index].iconPath,
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      categories[index].name,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -81,7 +255,7 @@ class HomePage extends StatelessWidget {
       title: Text(
         'Dojo link',
         style: TextStyle(
-          color: Colors.greenAccent,
+          color: const Color.fromARGB(255, 255, 81, 81),
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -96,7 +270,7 @@ class HomePage extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.greenAccent,
+            color: const Color.fromARGB(255, 237, 98, 98),
           ),
           child: SvgPicture.asset(
             'assets/icons/back.svg',
@@ -116,7 +290,7 @@ class HomePage extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Colors.greenAccent,
+              color: const Color.fromARGB(255, 237, 98, 98),
             ),
             child: SvgPicture.asset(
               'assets/icons/dots.svg',
