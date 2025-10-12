@@ -33,94 +33,95 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 20),
           categoriesSection(),
           SizedBox(height: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Waza',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: 240,
-                child: ListView.separated(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: waza.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 210,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            const Color.fromARGB(255, 235, 150, 140),
-                            const Color.fromARGB(
-                              255,
-                              141,
-                              9,
-                              0,
-                            ).withValues(alpha: 0.3),
-                          ],
-                        ),
-
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                            child: Image.asset(
-                              waza[index].imagePath,
-                              width: double.infinity,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0,
-                            ),
-                            child: Text(
-                              waza[index].title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                              maxLines: 2, // prevents overflow
-                              overflow:
-                                  TextOverflow.ellipsis, // adds ... if too long
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            waza[index].level,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: const Color.fromARGB(255, 125, 5, 5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(width: 25),
-                ),
-              ),
-            ],
-          ),
+          wazaSection(),
         ],
       ),
+    );
+  }
+
+  Column wazaSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            'Waza',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: 20),
+        SizedBox(
+          height: 240,
+          child: ListView.separated(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            scrollDirection: Axis.horizontal,
+            itemCount: waza.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 210,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      const Color.fromARGB(255, 235, 150, 140),
+                      const Color.fromARGB(
+                        255,
+                        141,
+                        9,
+                        0,
+                      ).withValues(alpha: 0.3),
+                    ],
+                  ),
+
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      ),
+                      child: Image.asset(
+                        waza[index].imagePath,
+                        width: double.infinity,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        waza[index].title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2, // prevents overflow
+                        overflow: TextOverflow.ellipsis, // adds ... if too long
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      waza[index].level,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: const Color.fromARGB(255, 125, 5, 5),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(width: 25),
+          ),
+        ),
+      ],
     );
   }
 
