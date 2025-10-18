@@ -1,0 +1,6 @@
+{
+    // auto hot reload on saves that actually changed files
+"dart.flutterHotReloadOnSave": "allIfDirty",
+"dart.hotReloadOnSave": "manualIfDirty"
+
+}
