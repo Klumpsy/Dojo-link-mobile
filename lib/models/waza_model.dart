@@ -1,51 +1,22 @@
 class WazaModel {
-  final String wazaName;
-  final String title;
-  final String level;
-  final String imagePath;
-  final bool viewIsSelected;
+  final String name;
+  final String description;
+  final String? imagePath;
+  final String? videoPath;
 
   WazaModel({
-    required this.wazaName,
-    required this.title,
-    required this.level,
-    required this.imagePath,
-    required this.viewIsSelected,
+    required this.name,
+    required this.description,
+    this.imagePath,
+    this.videoPath,
   });
 
-  static List<WazaModel> getWaza() {
-    List<WazaModel> waza = [];
-
-    waza.add(
-      WazaModel(
-        wazaName: 'Deashi harai',
-        title: 'Combinatie deashi harai',
-        level: 'Beginner',
-        imagePath: 'assets/images/de-ashi-barai.jpg',
-        viewIsSelected: true,
-      ),
+  factory WazaModel.fromMap(Map<String, dynamic> map) {
+    return WazaModel(
+      name: map['name'] ?? '',
+      description: map['description'] ?? '',
+      imagePath: map['image_path'], // can be null
+      videoPath: map['video_path'], // can be null
     );
-
-    waza.add(
-      WazaModel(
-        wazaName: 'Ippon seoi nage',
-        title: 'Ippon seoi nage linker pakking',
-        level: 'Intermediate',
-        imagePath: 'assets/images/ippon-seoi-nage.jpg',
-        viewIsSelected: false,
-      ),
-    );
-
-    waza.add(
-      WazaModel(
-        wazaName: 'O goshi',
-        title: 'O goshi met links doorstappen',
-        level: 'Beginner',
-        imagePath: 'assets/images/o-goshi.jpg',
-        viewIsSelected: false,
-      ),
-    );
-
-    return waza;
   }
 }

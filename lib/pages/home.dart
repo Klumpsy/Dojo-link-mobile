@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0; // To handle selected button (optional visual feedback)
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,11 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 20),
           categoriesSection(),
           const SizedBox(height: 20),
-          wazaSection(),
+          WazaSection(),
           const SizedBox(height: 20),
         ],
       ),
 
-      // 👇 Bottom App Bar with three buttons
       bottomNavigationBar: CustomBottomNav(
         currentIndex: _currentIndex,
         onTap: (index) {
